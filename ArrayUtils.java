@@ -1,4 +1,3 @@
-
 /**
  * Clase ArrayUtils: contiene implementaciones de rutinas fundamentales
  * sobre arreglos.
@@ -15,7 +14,11 @@ public class ArrayUtils
     public boolean pertenece(int elem, int[] arreglo) {
         if (arreglo == null)
             throw new IllegalArgumentException("Arreglo nulo");
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        for(int i = 0; i < arreglo.length; i++){
+            if(arreglo[i] == elem){
+                return true;
+            }
+        }
         return false;
     }
     
@@ -23,6 +26,8 @@ public class ArrayUtils
      * Calcula la suma de los elementos de un arreglo de ENTEROS.
      */
     public int suma(int[] arreglo) {
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
         int suma = 0; 
         for(int i = 0; i < arreglo.length; i++){
             suma += arreglo[i];
@@ -45,22 +50,30 @@ public class ArrayUtils
      * Calcula el valor mínimo de un arreglo de reales
      */
     public float minimo(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        float minimo = arreglo[0];
+        for(int i = 1; i < arreglo.length; i++){
+            if(arreglo[i] < arreglo[i-1]){
+                minimo = arreglo[i];
+            }
+        }
+        return minimo;
     }
     
     /**
      * Calcula el valor máximo de un arreglo de reales
      */
     public float maximo(float[] arreglo) {
-        if(arreglo == null)
+        if (arreglo == null)
             throw new IllegalArgumentException("Arreglo nulo");
-        float suma = 0;
-        float cantidad = arreglo.length;
-        for(int i = 0; i < arreglo.length; i++){
-            suma += arreglo[i];
+        float maximo = arreglo[0];
+        for(int i = 1; i < arreglo.length; i++){
+            if(arreglo[i] > arreglo[i-1]){
+                maximo = arreglo[i];
+            }
         }
-        return suma/cantidad;
+        return maximo;
     }
     
     
@@ -68,22 +81,31 @@ public class ArrayUtils
      * Calcula el valor promedio de un arreglo de reales
      */
     public float promedio(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if(arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        float suma = suma(arreglo);
+        float cantidad = arreglo.length;
+        return suma/cantidad;
     }
     
     /**
      * Retorna un arreglo con los primeros n números de Fibonacci
      */
     public int[] fibSequence(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return null;
+        int[] fibo = new int[n];
+        fibo[1] = 1;
+        for(int i = 2; i < fibo.length; i++){
+            fibo[i] = fibo[i-1] + fibo[i-2];
+        }
+        return fibo;
     }
     
     /**
      * Calcula la mediana de un arreglo de reales
      */
     public float mediana(float[] arreglo) {
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
         if (!(arregloOrdenadoAs(arreglo)) && !(arregloOrdenadoDes(arreglo)))
             throw new IllegalArgumentException("El arreglo debe estar ordenado (Ascendente o descendentemente)");
         float mediana = 0;
@@ -97,23 +119,43 @@ public class ArrayUtils
      * Comprueba si dos arreglos de enteros son iguales
      */
     public boolean iguales(int[] arr1, int[] arr2) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        if (arr1 == null || arr2 == null)
+            throw new IllegalArgumentException("Arreglo/s nulo/s");
+        if(arr1.equals(arr2)){
+            return true;
+        }
         return false;
     }
     
     /**
-     * Comprueba si un arreglo tiene valores repetidos
+     * Comprueba si un arreglo tiene valores repetidos /excluir casos indice igual.
      */
     public boolean tieneRepetidos(int[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        for(int i = 0; i < arreglo.length; i++){
+            for(int j = 1; j < arreglo.length -1; j++){
+                if(arreglo[i] == arreglo[j]){
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
     /**
      * Comprueba si un arreglo tiene dos valores cuya suma dé cero.
      */
-    public boolean tieneOpuestos(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+    public boolean tieneOpuestos(float[] arreglo) { //modificar
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        for(int i = 0; i < arreglo.length; i++){
+            for(int j = 1; j < arreglo.length -1; j++){
+                if(arreglo[i] + arreglo[j] == 0){
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
