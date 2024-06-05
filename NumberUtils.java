@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Clase NumberUtils: contiene implementaciones de rutinas fundamentales
  * sobre números.
@@ -10,12 +10,19 @@ import java.util.ArrayList;
 
 public class NumberUtils
 {
-    
     /**
      * Comprueba si un número es primo.
      */
     public boolean esPrimo(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        int contador = 0;
+        for(int i = 1; i < 11; i++){
+            if(n % i == 0){
+                contador += 1;
+            }
+        }
+        if(contador < 3){
+            return true;
+        }
         return false;
     }
     
@@ -23,37 +30,52 @@ public class NumberUtils
      * Comprueba si un número es compuesto.
      */
     public boolean esCompuesto(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        if(n > 1) throw new IllegalArgumentException("El número no puede ser menor a 1.");
+        int contador = 0;
+        for(int i = 1; i < 11; i++){
+            if(n % i == 0){
+                contador += 1;
+            }
+        }
+        if(contador >= 3){
+            return true;
+        }
         return false;
     }
 
+    /**
+     * Comprueba si un número es compuesto en base al método esPrimo(n).
+     */
+    public boolean esCompuesto2(int n) {
+        if(n > 1) throw new IllegalArgumentException("El número no puede ser menor a 1.");
+        
+        if(esPrimo(n)){
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Calcula el máximo común divisor de dos números.
      */
     public int maximoComunDivisor(int n, int m) { //en proceso
         if(n <= 0 || m <= 0)
             throw new IllegalArgumentException("Los numeros no pueden ser menores o iguales a cero.");
-        int dividendo = 0;
-        int divisor = 0;
-        int cociente = 0;
-        int resto = 0;
+        int maximo = 0;
+        int minimo = 0;
         int mcd = 0;
         if(n > m){
-            dividendo = n;
-            divisor = m;
+            maximo = n;
+            minimo = m;
         }
         else{
-            dividendo = m;
-            divisor = n;
+            maximo = m;
+            minimo = n;
         }
-        cociente = dividendo / divisor;
-        resto = dividendo % divisor;
-        if(resto == 0){
-            mcd = cociente;
-        }
-        while(resto > 0){
-            cociente = divisor / resto;
-            mcd = cociente;
+        for(int i = 0; minimo > 0; i++){
+            mcd = minimo; //guardamos el valor del minimo.
+            minimo = maximo % minimo; //asignamos el resto del máximo y el mínimo al mínimo.
+            maximo = mcd; //le asignamos el minimo anterior al máximo.
         }
         return mcd;
     }
@@ -62,8 +84,22 @@ public class NumberUtils
      * Calcula el mínimo común múltiplo de dos números.
      */
     public int minimoComunMultiplo(int n, int m) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        int maximo = 0;
+        int minimo = 0;
+        int mcm = maximo;
+        if(n > m){
+            maximo = n;
+            minimo = m;
+        }
+        else{
+            maximo = m;
+            minimo = n;
+        }
+
+        while (mcm % minimo > 0) {
+            mcm += maximo;
+        }
+        return mcm;
     }
     
     /**
@@ -75,19 +111,36 @@ public class NumberUtils
     }
     
     /**
-     * Calcula los primeros n números primos
+     * Calcula los primeros n números primos //A modificar
      */
     public int[] primos(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return null;
+        ArrayList<Integer> nPrimos = new ArrayList<>();
+        int[] primos = new int[n];
+        int valor = 0;
+        for(int i = 0; i < primos.length; i++){
+            nPrimos.add(i, i);
+            int posActual = nPrimos.get(i);
+            if(esPrimo(posActual)){
+                primos[i] = posActual;
+            }
+        }
+        
+        return primos;
     }
     
     /**
      * Calcula el n-ésimo número de Fibonacci
      */
     public int nthFib(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if(n <= 0) throw new IllegalArgumentException("El número no puede ser menor a uno.");
+        int numero = 0;
+        if(n == 1){
+            numero = 0;
+        }
+        else if(n == 2){
+            numero = 1;
+        }
+        return numero;
     }
     
     /**

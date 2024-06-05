@@ -121,21 +121,31 @@ public class ArrayUtils
     public boolean iguales(int[] arr1, int[] arr2) {
         if (arr1 == null || arr2 == null)
             throw new IllegalArgumentException("Arreglo/s nulo/s");
-        if(arr1.equals(arr2)){
-            return true;
+        if(arr1.length == arr2.length){
+            for(int i = 0; i < arr1.length; i++){
+                if(arr1[i] != arr2[i]){
+                    return false;
+                }
+            }
         }
-        return false;
+        else{
+            return false;
+        }
+        return true;
     }
     
     /**
-     * Comprueba si un arreglo tiene valores repetidos /excluir casos indice igual.
+     * Comprueba si un arreglo tiene valores repetidos.
      */
     public boolean tieneRepetidos(int[] arreglo) {
         if (arreglo == null)
             throw new IllegalArgumentException("Arreglo nulo");
         for(int i = 0; i < arreglo.length; i++){
-            for(int j = 1; j < arreglo.length -1; j++){
-                if(arreglo[i] == arreglo[j]){
+            for(int j = 0; j < arreglo.length -1; j++){
+                if(i == j){
+                    j++;
+                }
+                else if(arreglo[i] == arreglo[j]){
                     return true;
                 }
             }
@@ -146,12 +156,13 @@ public class ArrayUtils
     /**
      * Comprueba si un arreglo tiene dos valores cuya suma dé cero.
      */
-    public boolean tieneOpuestos(float[] arreglo) { //modificar
+    public boolean tieneOpuestos(float[] arreglo) {
         if (arreglo == null)
             throw new IllegalArgumentException("Arreglo nulo");
         for(int i = 0; i < arreglo.length; i++){
-            for(int j = 1; j < arreglo.length -1; j++){
-                if(arreglo[i] + arreglo[j] == 0){
+            float actual = arreglo[i];
+            for(int j = 0; j < arreglo.length; j++){
+                if(actual + arreglo[j] == 0){
                     return true;
                 }
             }
@@ -193,21 +204,14 @@ public class ArrayUtils
     
     /**
      * Ordena un arreglo de reales ascendentemente: /INCOMPLETO.
-     * 
+     * 25134
+     * 21534
+     * 21354
+     * 21345
+     * 12345
      */
     public float[] ordArregloAs(float[] arreglo){
-        float minimo = arreglo[0];
-        float maximo = arreglo[0];
-        for(int i = 0; i < arreglo.length; i++){
-            for(int j = 1; j < arreglo.length -1; j++){
-                if(arreglo[i] > arreglo[j]){
-                    maximo = arreglo[i];
-                    minimo = arreglo[j];
-                    arreglo[j] = maximo;
-                    arreglo[i] = minimo;
-                }
-            }
-        }
+        
         return arreglo;
     }
 }
