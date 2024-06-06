@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 /**
  * Clase NumberUtils: contiene implementaciones de rutinas fundamentales
  * sobre números.
@@ -106,25 +107,30 @@ public class NumberUtils
      * Calcula los divisores de un número.
      */
     public ArrayList<Integer> divisores(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return null;
+        ArrayList<Integer> divisores = new ArrayList<>();
+        for(int i = 1; i <= n; i++){
+            if(n % i == 0){
+                divisores.add(i);
+            }
+        }
+        for(Integer i: divisores){
+            System.out.println(i);
+        }
+        return divisores;
     }
     
     /**
      * Calcula los primeros n números primos //A modificar
      */
     public int[] primos(int n) {
-        ArrayList<Integer> nPrimos = new ArrayList<>();
         int[] primos = new int[n];
-        int valor = 0;
         for(int i = 0; i < primos.length; i++){
-            nPrimos.add(i, i);
-            int posActual = nPrimos.get(i);
-            if(esPrimo(posActual)){
-                primos[i] = posActual;
+            for(int j = 0; j < primos.length; j++){
+                if(esPrimo(j)){
+                    primos[j] = j;
+                }
             }
         }
-        
         return primos;
     }
     
