@@ -150,36 +150,89 @@ public class NumberUtils
     }
     
     /**
-     * Calcula los dígitos de un número entero positivo.
-     */
+     * Calcula los dígitos de un número entero positivo. //A MODIFICAR
+    */
     public ArrayList<Integer> digitos(int n) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return null;
+        if (n == 1) throw new IllegalArgumentException ("El número no puede ser cero");
+        String caracteres = "";
+        int nroCaracteres = caracteres.length();
+        
+        if(n < 0){
+            caracteres = "" + n;
+            nroCaracteres = caracteres.length() -1;
+        }
+        else{
+            caracteres = "" + n;
+            nroCaracteres = caracteres.length();
+        }
+        ArrayList<Integer> digitos = new ArrayList<>();
+        
+        for(int i = nroCaracteres -1; i >= 0; i--){ //Extraer cada número según su posición como potencia decimal.
+            int caracterActual = 0;
+            if(i < nroCaracteres){
+                caracterActual = n;
+                caracterActual = caracterActual % 10;
+                caracterActual = caracterActual/10;
+            }   
+            digitos.add(caracterActual);
+        }
+        System.out.println("El número tiene: " + nroCaracteres + " digitos.");
+        for(Integer i: digitos){
+            System.out.println(i);
+        }
+        return digitos;
+    }
+    
+    /**
+     * Calcula la suma de los elementos de un arreglo de REALES.
+     */
+    public float suma(float[] arreglo) {
+        float suma = 0; 
+        for(int i = 0; i < arreglo.length; i++){
+            suma += arreglo[i];
+        }
+        return suma;
     }
     
     /**
      * Calcula el valor mínimo de un arreglo de reales
      */
     public float minimo(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        float minimo = arreglo[0];
+        for(int i = 1; i < arreglo.length; i++){
+            if(arreglo[i] < arreglo[i-1]){
+                minimo = arreglo[i];
+            }
+        }
+        return minimo;
     }
     
     /**
      * Calcula el valor máximo de un arreglo de reales
      */
     public float maximo(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        float maximo = arreglo[0];
+        for(int i = 1; i < arreglo.length; i++){
+            if(arreglo[i] > arreglo[i-1]){
+                maximo = arreglo[i];
+            }
+        }
+        return maximo;
     }
-    
     
     /**
      * Calcula el valor promedio de un arreglo de reales
      */
     public float promedio(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if(arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        float suma = suma(arreglo);
+        float cantidad = arreglo.length;
+        return suma/cantidad;
     }
     
     /**
@@ -194,23 +247,52 @@ public class NumberUtils
      * Calcula la mediana de un arreglo de reales
      */
     public float mediana(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return 0;
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        if (!(arregloOrdenadoAs(arreglo)) && !(arregloOrdenadoDes(arreglo)))
+            throw new IllegalArgumentException("El arreglo debe estar ordenado (Ascendente o descendentemente)");
+        float mediana = 0;
+        for(int i = 0; i < arreglo.length; i++){
+            mediana = suma(arreglo) / arreglo.length;
+        }
+        return mediana;
     }
     
     /**
      * Comprueba si dos arreglos de enteros son iguales
      */
     public boolean iguales(int[] arr1, int[] arr2) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
-        return false;
+        if (arr1 == null || arr2 == null)
+            throw new IllegalArgumentException("Arreglo/s nulo/s");
+        if(arr1.length == arr2.length){
+            for(int i = 0; i < arr1.length; i++){
+                if(arr1[i] != arr2[i]){
+                    return false;
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        return true;
     }
     
     /**
-     * Comprueba si un arreglo tiene valores repetidos
+     * Comprueba si un arreglo tiene valores repetidos.
      */
     public boolean tieneRepetidos(int[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        for(int i = 0; i < arreglo.length; i++){
+            for(int j = 0; j < arreglo.length -1; j++){
+                if(i == j){
+                    j++;
+                }
+                else if(arreglo[i] == arreglo[j]){
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
@@ -218,8 +300,48 @@ public class NumberUtils
      * Comprueba si un arreglo tiene dos valores cuya suma dé cero.
      */
     public boolean tieneOpuestos(float[] arreglo) {
-        //TODO: Completar la implementación, reemplazando la línea siguiente
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        for(int i = 0; i < arreglo.length; i++){
+            float actual = arreglo[i];
+            for(int j = 0; j < arreglo.length; j++){
+                if(actual + arreglo[j] == 0){
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
+    /**
+     * Chequea si un arreglo de reales esta ordenado ascendentemente.
+     */
+    public boolean arregloOrdenadoAs(float[] arreglo){
+        boolean ordenado = false;
+        for(int i = 0; i < arreglo.length -1; i++){
+            if(arreglo[i] <= arreglo[i+1]){
+                ordenado = true;
+            }
+            else{
+                return false;
+            }
+        }
+        return ordenado;
+    }
+    
+    /**
+     * Chequea si un arreglo de reales esta ordenado descendentemente.
+     */
+    public boolean arregloOrdenadoDes(float[] arreglo){
+        boolean ordenado = false;
+        for(int i = 0; i < arreglo.length -1; i++){
+            if(arreglo[i] >= arreglo[i+1]){
+                ordenado = true;
+            }
+            else{
+                return false;
+            }
+        }
+        return ordenado;
+    }
 }
