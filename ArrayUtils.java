@@ -76,6 +76,16 @@ public class ArrayUtils
         return maximo;
     }
     
+    /**
+     * Calcula el valor promedio de un arreglo de ENTEROS
+     */
+    public int promedio(int[] arreglo) {
+        if(arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        int suma = suma(arreglo);
+        int cantidad = arreglo.length;
+        return suma/cantidad;
+    }
     
     /**
      * Calcula el valor promedio de un arreglo de reales
@@ -108,10 +118,19 @@ public class ArrayUtils
             throw new IllegalArgumentException("Arreglo nulo");
         if (!(arregloOrdenadoAs(arreglo)) && !(arregloOrdenadoDes(arreglo)))
             throw new IllegalArgumentException("El arreglo debe estar ordenado (Ascendente o descendentemente)");
-        float mediana = 0;
-        for(int i = 0; i < arreglo.length; i++){
-            mediana = suma(arreglo) / arreglo.length;
-        }
+        float mediana = suma(arreglo) / arreglo.length;
+        return mediana;
+    }
+    
+    /**
+     * Calcula la mediana de un arreglo de ENTEROS
+     */
+    public int mediana(int[] arreglo) {
+        if (arreglo == null)
+            throw new IllegalArgumentException("Arreglo nulo");
+        if (!(arregloOrdenadoAs(arreglo)) && !(arregloOrdenadoDes(arreglo)))
+            throw new IllegalArgumentException("El arreglo debe estar ordenado (Ascendente o descendentemente)");
+        int mediana = suma(arreglo) / arreglo.length;
         return mediana;
     }
     
@@ -171,12 +190,44 @@ public class ArrayUtils
     }
     
     /**
+     * Chequea si un arreglo de ENTEROS esta ordenado ascendentemente.
+     */
+    public boolean arregloOrdenadoAs(int[] arreglo){
+        boolean ordenado = false;
+        for(int i = 0; i < arreglo.length -1; i++){
+            if(arreglo[i] <= arreglo[i+1]){
+                ordenado = true;
+            }
+            else{
+                return false;
+            }
+        }
+        return ordenado;
+    }
+    
+    /**
      * Chequea si un arreglo de reales esta ordenado ascendentemente.
      */
     public boolean arregloOrdenadoAs(float[] arreglo){
         boolean ordenado = false;
         for(int i = 0; i < arreglo.length -1; i++){
             if(arreglo[i] <= arreglo[i+1]){
+                ordenado = true;
+            }
+            else{
+                return false;
+            }
+        }
+        return ordenado;
+    }
+    
+    /**
+     * Chequea si un arreglo de ENTEROS esta ordenado descendentemente.
+     */
+    public boolean arregloOrdenadoDes(int[] arreglo){
+        boolean ordenado = false;
+        for(int i = 0; i < arreglo.length -1; i++){
+            if(arreglo[i] >= arreglo[i+1]){
                 ordenado = true;
             }
             else{
@@ -213,5 +264,88 @@ public class ArrayUtils
     public float[] ordArregloAs(float[] arreglo){
         
         return arreglo;
+    }
+    
+    /**
+     * A cada posición de un arreglo, asigna su posición.
+     */
+    public int[] arregloAPosiciones(int[] arreglo){
+        for(int i = 0; i < arreglo.length; i++){
+            arreglo[i] = i;
+        }
+        return arreglo;
+    }
+    
+    /**
+     * Devuelve la posición media de un arreglo de ENTEROS.
+     */
+    public int posMedia (int[] arreglo){
+        int posMedia = 0;
+        for(int i = 0; i < arreglo.length; i++){
+            if(arreglo[i] == mediana(arreglo)){
+                posMedia = i;
+            }
+        }
+        return posMedia;
+    }
+    
+    /**
+     * Búsqueda lineal en arreglo de enteros.
+     */
+    public void busquedaLineal(int[] arreglo, int elem){
+        if(arreglo == null) throw new IllegalArgumentException("Arreglo nulo.");
+        boolean encontrado = false;
+        int posEncontrado = 0;
+        int tamanho = arreglo.length;
+        for(int i = 0; i < tamanho && encontrado == false; i++){
+            if(arreglo[i] == elem){
+                posEncontrado = arreglo[i];
+                encontrado = true;
+            }
+        }
+        if(encontrado = true){
+            System.out.println("Elemento " + elem + " encontrado en la posición: " + posEncontrado);
+        }
+        else{
+            System.out.println("El elemento " + elem + " no fue encontrado.");
+        }
+    }
+    
+    /**
+     * Búsqueda dicotómica en arreglo de enteros. //ESBOZO
+     */
+    public void busquedaDicotomica(int[] arreglo, int elem){
+        if(arreglo == null) throw new IllegalArgumentException("Arreglo nulo.");
+        if(!arregloOrdenadoAs(arreglo)) throw new IllegalArgumentException("El arreglo debe estar ordenado ascendentemente.");
+        boolean encontrado = false;
+        int posEncontrado = 0;
+        int tamanho = arreglo.length;
+        int puntoMedio = posMedia(arreglo);
+        
+        if(elem == puntoMedio){
+            encontrado = true;
+        }
+        else if(elem > puntoMedio){
+            for(int i = puntoMedio; i > puntoMedio && i < tamanho && encontrado == false; i++){
+                if(arreglo[i] == elem){
+                    posEncontrado = arreglo[i];
+                    encontrado = true;
+                }
+            }
+        }
+        else{
+            for(int i = 0; i < puntoMedio && encontrado == false; i++){
+                if(arreglo[i] == elem){
+                    posEncontrado = arreglo[i];
+                    encontrado = true;
+                }
+            }
+        }
+        if(encontrado = true){
+            System.out.println("Elemento " + elem + " encontrado en la posición: " + posEncontrado);
+        }
+        else{
+            System.out.println("El elemento " + elem + " no fue encontrado.");
+        }
     }
 }
