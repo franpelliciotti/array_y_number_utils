@@ -281,10 +281,11 @@ public class ArrayUtils
      */
     public int posMedia (int[] arreglo){
         int posMedia = 0;
-        for(int i = 0; i < arreglo.length; i++){
-            if(arreglo[i] == mediana(arreglo)){
-                posMedia = i;
-            }
+        if(arreglo.length % 2 != 0){
+            posMedia = arreglo.length + 1 / 2; //para incluir la pos. 0.
+        }
+        else{
+            posMedia = arreglo.length / 2;
         }
         return posMedia;
     }
@@ -320,12 +321,12 @@ public class ArrayUtils
         boolean encontrado = false;
         int posEncontrado = 0;
         int tamanho = arreglo.length;
-        int puntoMedio = posMedia(arreglo);
+        int puntoMedio = posMedia(arreglo); //!!
         
-        if(elem == puntoMedio){
+        if(elem == arreglo[puntoMedio]){
             encontrado = true;
         }
-        else if(elem > puntoMedio){
+        else if(elem > arreglo[puntoMedio]){
             for(int i = puntoMedio; i > puntoMedio && i < tamanho && encontrado == false; i++){
                 if(arreglo[i] == elem){
                     posEncontrado = arreglo[i];
